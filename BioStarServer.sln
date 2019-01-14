@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BioStarServer", "BioStarServer\BioStarServer.csproj", "{A8553CCD-0334-45D3-B78F-7999F7714774}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8553CCD-0334-45D3-B78F-7999F7714774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8553CCD-0334-45D3-B78F-7999F7714774}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8553CCD-0334-45D3-B78F-7999F7714774}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8553CCD-0334-45D3-B78F-7999F7714774}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8978C78-2A4D-422E-BB47-A6EFDB96826B}
+	EndGlobalSection
+EndGlobal
