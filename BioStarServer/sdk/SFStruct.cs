@@ -1985,7 +1985,9 @@ namespace Suprema
 
     public class Translator<TSource, TOutput>  //: TranslatorBase<TSource, TOutput>
     {
+#pragma warning disable CS0693 // 类型参数与外部类型中的类型参数同名
         public void Translate<TSource, TOutput>(ref TSource src, ref TOutput output)
+#pragma warning restore CS0693 // 类型参数与外部类型中的类型参数同名
         {
             Util.TranslatePrimitive<TSource, TOutput>(ref src, ref output);
             try

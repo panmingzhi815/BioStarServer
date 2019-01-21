@@ -73,7 +73,11 @@
     <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.42\lib\net40\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -84,8 +88,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeviceMonitor.cs" />
     <Compile Include="BioSDK.cs" />
-    <Compile Include="FunctionModule.cs" />
+    <Compile Include="DatabaseHelper.cs" />
+    <Compile Include="model\Card.cs" />
+    <Compile Include="model\CardUsage.cs" />
+    <Compile Include="model\Device.cs" />
+    <Compile Include="sdk\FunctionModule.cs" />
+    <Compile Include="model\Finger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -94,22 +104,46 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SFApi.cs" />
-    <Compile Include="SFEnum.cs" />
-    <Compile Include="SFStruct.cs" />
-    <Compile Include="Util.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="model\Task.cs" />
+    <Compile Include="sdk\SFApi.cs" />
+    <Compile Include="sdk\SFEnum.cs" />
+    <Compile Include="sdk\SFStruct.cs" />
+    <Compile Include="UiLogAppender.cs" />
+    <Compile Include="sdk\Util.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="sdk\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include=".editorconfig" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\connect_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\connect_success.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\default.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
