@@ -32,6 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.listView1 = new System.Windows.Forms.ListView();
             this.column1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.清空设备所有记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.清空设备所有用户ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -44,14 +47,11 @@
             this.bottom = new System.Windows.Forms.Panel();
             this.center = new System.Windows.Forms.Panel();
             this.left = new System.Windows.Forms.Panel();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.清空设备所有记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.清空设备所有用户ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.bottom.SuspendLayout();
             this.center.SuspendLayout();
             this.left.SuspendLayout();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
@@ -71,11 +71,34 @@
             this.listView1.TabIndex = 5;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // column1
             // 
             this.column1.Text = "管理设备列表";
             this.column1.Width = 195;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.清空设备所有记录ToolStripMenuItem,
+            this.清空设备所有用户ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(173, 48);
+            // 
+            // 清空设备所有记录ToolStripMenuItem
+            // 
+            this.清空设备所有记录ToolStripMenuItem.Name = "清空设备所有记录ToolStripMenuItem";
+            this.清空设备所有记录ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.清空设备所有记录ToolStripMenuItem.Text = "清空设备所有记录";
+            this.清空设备所有记录ToolStripMenuItem.Click += new System.EventHandler(this.清空设备所有记录ToolStripMenuItem_Click);
+            // 
+            // 清空设备所有用户ToolStripMenuItem
+            // 
+            this.清空设备所有用户ToolStripMenuItem.Name = "清空设备所有用户ToolStripMenuItem";
+            this.清空设备所有用户ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.清空设备所有用户ToolStripMenuItem.Text = "清空设备所有用户";
+            this.清空设备所有用户ToolStripMenuItem.Click += new System.EventHandler(this.清空设备所有用户ToolStripMenuItem_Click);
             // 
             // imageList1
             // 
@@ -94,6 +117,7 @@
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox1.Size = new System.Drawing.Size(756, 621);
             this.textBox1.TabIndex = 6;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // timer1
             // 
@@ -195,28 +219,6 @@
             this.left.Size = new System.Drawing.Size(200, 621);
             this.left.TabIndex = 10;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.清空设备所有记录ToolStripMenuItem,
-            this.清空设备所有用户ToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 70);
-            // 
-            // 清空设备所有记录ToolStripMenuItem
-            // 
-            this.清空设备所有记录ToolStripMenuItem.Name = "清空设备所有记录ToolStripMenuItem";
-            this.清空设备所有记录ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.清空设备所有记录ToolStripMenuItem.Text = "清空设备所有记录";
-            this.清空设备所有记录ToolStripMenuItem.Click += new System.EventHandler(this.清空设备所有记录ToolStripMenuItem_Click);
-            // 
-            // 清空设备所有用户ToolStripMenuItem
-            // 
-            this.清空设备所有用户ToolStripMenuItem.Name = "清空设备所有用户ToolStripMenuItem";
-            this.清空设备所有用户ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.清空设备所有用户ToolStripMenuItem.Text = "清空设备所有用户";
-            this.清空设备所有用户ToolStripMenuItem.Click += new System.EventHandler(this.清空设备所有用户ToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -225,12 +227,15 @@
             this.Controls.Add(this.center);
             this.Controls.Add(this.left);
             this.Controls.Add(this.bottom);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
-            this.Text = "一体读头服务器";
+            this.ShowIcon = false;
+            this.Text = "一体读头服务器 v1.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
+            this.VisibleChanged += new System.EventHandler(this.Main_VisibleChanged);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             this.bottom.ResumeLayout(false);
@@ -238,7 +243,6 @@
             this.center.ResumeLayout(false);
             this.center.PerformLayout();
             this.left.ResumeLayout(false);
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

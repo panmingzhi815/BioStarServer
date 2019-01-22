@@ -30,7 +30,7 @@ namespace BioStarServer
         {
             using (IDbConnection conn = GetConnection())
             {
-                return conn.Query<Device>("select d.id as Id,L.address as Ip,d.Name as DeviceName,d.groupCodeJoinStr as groupCodeJoinStr,d.groupCodeNameJoinStr as GroupCodeNameJoinStr,d.Identifier as DeviceIdentifier,d.Type as DeviceTypeEnum,d.Identifier as DeviceIdentifier,d.faceAttendanceStamp as LastRecordStamp from Device d left join Link L on d.Link = L.id left join Host H on L.host = H.id where H.name in @HostName", new { HostName = hostName }).AsList();
+                return conn.Query<Device>("select d.id as Id,L.address as Ip,d.Name as DeviceName,d.groupCodeJoinStr as groupCodeJoinStr,d.groupCodeNameJoinStr as GroupCodeNameJoinStr,d.Identifier as DeviceIdentifier,d.Type as DeviceTypeEnum,d.Identifier as DeviceIdentifier,d.faceAttendanceStamp as LastRecordStamp from Device d left join Link L on d.Link = L.id left join Host H on L.host = H.id where d.Type=@DeviceType and H.name in @HostName", new { DeviceType = "SPMAttendanceDevice", HostName = hostName }).AsList();
             }
         }
 

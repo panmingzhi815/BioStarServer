@@ -80,6 +80,8 @@ namespace BioStarServer
                     Clean_User = false;
                 }
 
+                bioSdk.SynDateTime(ref DeviceId,DatabaseHelper.ParseDateTimeTo1970Sec(DateTime.Now.AddHours(8)));
+
                 var geTasks = DatabaseHelper.GeTasks(device.Id);
                 foreach (var geTask in geTasks)
                 {

@@ -55,7 +55,7 @@ namespace Suprema
                 {
                     idMapIp.Add(deviceID, deviceIP);
                 }
-                _log.ErrorFormat("连接设备成功 设备ID : {0}", deviceID);
+                _log.ErrorFormat("连接设备成功 设备IP : {0}", deviceID);
                 return true;
             }
             catch (Exception)
@@ -72,6 +72,15 @@ namespace Suprema
             return deviceIp;
         }
 
+        internal void SynDateTime(ref uint deviceID, uint gmtTime)
+        {
+            BS2ErrorCode result = (BS2ErrorCode)API.BS2_SetDeviceTime(sdkContext, deviceID, gmtTime);
+            if(BS2ErrorCode.BS_SDK_SUCCESS != result)
+            {
+                _log.ErrorFormat("同步时间失败，设备IP : {0}", parseIdToIp(deviceID));
+            }
+        }
+
         public bool DisConnectDevice(ref UInt32 deviceID)
         {
             try
@@ -80,16 +89,16 @@ namespace Suprema
                 BS2ErrorCode result = (BS2ErrorCode)API.BS2_DisconnectDevice(sdkContext, deviceID);
                 if (BS2ErrorCode.BS_SDK_SUCCESS != result)
                 {
-                    _log.ErrorFormat("断开设备失败 : {0} 设备ID : {1}", result, parseIdToIp(deviceID));
+                    _log.ErrorFormat("断开设备失败 : {0} 设备IP : {1}", result, parseIdToIp(deviceID));
                     return false;
                 }
 
-                _log.ErrorFormat("断开设备成功 : {0} 设备ID : {1}", result, parseIdToIp(deviceID));
+                _log.ErrorFormat("断开设备成功 : {0} 设备IP : {1}", result, parseIdToIp(deviceID));
                 return true;
             }
             catch (Exception)
             {
-                _log.ErrorFormat("断开设备异常，设备ID : {0}", parseIdToIp(deviceID));
+                _log.ErrorFormat("断开设备异常，设备IP : {0}", parseIdToIp(deviceID));
                 return false;
             }
         }
@@ -117,17 +126,17 @@ namespace Suprema
             if (result == BS2ErrorCode.BS_SDK_ERROR_DUPLICATE_CARD)
             {
                 string userId = Encoding.UTF8.GetString(Empty(userBlob.user.userID));
-                _log.ErrorFormat("卡片己存在, 先从 设备ID : {0} 删除用户 {1}", parseIdToIp(deviceID), userId);
+                _log.ErrorFormat("卡片己存在, 先从 设备IP : {0} 删除用户 {1}", parseIdToIp(deviceID), userId);
                 RemoveUser(ref deviceID, userId);
                 return false;
             }
             else if (result != BS2ErrorCode.BS_SDK_SUCCESS)
             {
-                _log.ErrorFormat("插入用户失败, 状态码 : {0} 设备ID : {1}", result, parseIdToIp(deviceID));
+                _log.ErrorFormat("插入用户失败, 状态码 : {0} 设备IP : {1}", result, parseIdToIp(deviceID));
                 return false;
             }
 
-            _log.ErrorFormat("插入用户成功, 状态码 : {0} 设备ID : {1} ，结果 : {2}", result, parseIdToIp(deviceID), result == BS2ErrorCode.BS_SDK_SUCCESS);
+            _log.ErrorFormat("插入用户成功, 状态码 : {0} 设备IP : {1} ，结果 : {2}", result, parseIdToIp(deviceID), result == BS2ErrorCode.BS_SDK_SUCCESS);
             return result == BS2ErrorCode.BS_SDK_SUCCESS;
         }
 
@@ -145,11 +154,11 @@ namespace Suprema
             
             if (result != BS2ErrorCode.BS_SDK_SUCCESS)
             {
-                _log.ErrorFormat("删除用户:{0} 失败, 状态码 : {1} 设备ID : {2}", userID, result, parseIdToIp(deviceID));
+                _log.ErrorFormat("删除用户:{0} 失败, 状态码 : {1} 设备IP : {2}", userID, result, parseIdToIp(deviceID));
                 return false;
             }
 
-            _log.ErrorFormat("删除用户:{0} 成功, 状态码 : {1} 设备ID : {2}", userID, result, parseIdToIp(deviceID));
+            _log.ErrorFormat("删除用户:{0} 成功, 状态码 : {1} 设备IP : {2}", userID, result, parseIdToIp(deviceID));
             return result == BS2ErrorCode.BS_SDK_SUCCESS;
         }
 
