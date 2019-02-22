@@ -35,6 +35,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.清空设备所有记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.清空设备所有用户ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.读取设备用户数量ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -82,9 +83,10 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.清空设备所有记录ToolStripMenuItem,
-            this.清空设备所有用户ToolStripMenuItem});
+            this.清空设备所有用户ToolStripMenuItem,
+            this.读取设备用户数量ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(173, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(173, 70);
             // 
             // 清空设备所有记录ToolStripMenuItem
             // 
@@ -99,6 +101,13 @@
             this.清空设备所有用户ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.清空设备所有用户ToolStripMenuItem.Text = "清空设备所有用户";
             this.清空设备所有用户ToolStripMenuItem.Click += new System.EventHandler(this.清空设备所有用户ToolStripMenuItem_Click);
+            // 
+            // 读取设备用户数量ToolStripMenuItem
+            // 
+            this.读取设备用户数量ToolStripMenuItem.Name = "读取设备用户数量ToolStripMenuItem";
+            this.读取设备用户数量ToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.读取设备用户数量ToolStripMenuItem.Text = "读取设备用户数量";
+            this.读取设备用户数量ToolStripMenuItem.Click += new System.EventHandler(this.读取设备用户数量ToolStripMenuItem_Click);
             // 
             // imageList1
             // 
@@ -231,7 +240,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Main";
             this.ShowIcon = false;
-            this.Text = "一体读头服务器 v1.1";
+            this.Text = "一体读头服务器 v1.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             this.VisibleChanged += new System.EventHandler(this.Main_VisibleChanged);
@@ -267,5 +276,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 清空设备所有记录ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 清空设备所有用户ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 读取设备用户数量ToolStripMenuItem;
     }
 }

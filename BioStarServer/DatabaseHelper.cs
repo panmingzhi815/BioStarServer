@@ -38,7 +38,7 @@ namespace BioStarServer
         {
             using (IDbConnection conn = GetConnection())
             {
-                return conn.Query<Finger>("select CUFT.id AS Id,CUFT.tmp AS Data from CardUserFingerTemplate CUFT LEFT JOIN CardUser CU on CUFT.cardUser_id = CU.id LEFT JOIN PhysicalCard PC on CU.id = PC.cardUser WHERE PC.SerialNumber=@SerialNumber", new { SerialNumber = serialNumber }).AsList();
+                return conn.Query<Finger>("select CUFT.id AS Id,CUFT.tmp AS Data,CUFT.size AS Size from CardUserFingerTemplate CUFT LEFT JOIN CardUser CU on CUFT.cardUser_id = CU.id LEFT JOIN PhysicalCard PC on CU.id = PC.cardUser WHERE PC.SerialNumber=@SerialNumber and CUFT.size = 768 and CUFT.tmp is not null", new { SerialNumber = serialNumber }).AsList();
             }
         }
 

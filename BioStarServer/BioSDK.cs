@@ -81,6 +81,17 @@ namespace Suprema
             }
         }
 
+        internal void GetUserSize(ref uint deviceId)
+        {
+            _log.InfoFormat("正在读取设备IP : {0} 用户数量", parseIdToIp(deviceId));
+            IntPtr outUidObjs = default(IntPtr);
+            uint outNumUids = 0;
+            API.IsAcceptableUserID cblsAcceptableUserID = null;
+            API.BS2_GetUserList(sdkContext, deviceId,out outUidObjs,out outNumUids, cblsAcceptableUserID);
+            _log.InfoFormat("设备IP : {0} 用户数量 : {1}", parseIdToIp(deviceId),outNumUids);
+            API.BS2_ReleaseObject(outUidObjs);
+        }
+
         public bool DisConnectDevice(ref UInt32 deviceID)
         {
             try
@@ -151,7 +162,7 @@ namespace Suprema
             Array.Copy(rawUid, 0, uidArray, 0, rawUid.Length);
             Marshal.Copy(uidArray, 0, uids, BS2Envirionment.BS2_USER_ID_SIZE);
             BS2ErrorCode result = (BS2ErrorCode)API.BS2_RemoveUser(sdkContext, deviceID, uids, 1);
-            
+
             if (result != BS2ErrorCode.BS_SDK_SUCCESS)
             {
                 _log.ErrorFormat("删除用户:{0} 失败, 状态码 : {1} 设备IP : {2}", userID, result, parseIdToIp(deviceID));
@@ -263,6 +274,7 @@ namespace Suprema
             UInt32 outNumEventLogs = 0;
 
             BS2ErrorCode result = (BS2ErrorCode)API.BS2_GetLog(sdkContext, deviceID, start, size, out outEventLogObjs, out outNumEventLogs);
+            //API.BS2_GetFilteredLogSinceEventId(sdkContext, deviceID,null,BS2EventCodeEnum.VERIFY_DURESS,start,0,0,)
             if (result != BS2ErrorCode.BS_SDK_SUCCESS)
             {
                 _log.ErrorFormat("采集设备 {0} 记录失败：{1}", parseIdToIp(deviceID), result);

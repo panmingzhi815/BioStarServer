@@ -122,6 +122,12 @@ namespace BioStarServer
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
+            DialogResult dr = MessageBox.Show("您确定要退出吗?","提示",MessageBoxButtons.YesNo);
+            if(dr != DialogResult.Yes)
+            {
+                e.Cancel = true;
+                return;
+            }
             foreach (var deviceMonitor in deviceMonitors)
             {
                 deviceMonitor.Stop();
@@ -163,6 +169,8 @@ namespace BioStarServer
                 return;
             };
 
+            this.textBox1.Text = "";
+
             foreach (var VARIABLE in selectedListViewItemCollection)
             {
                 ListViewItem item = (ListViewItem)VARIABLE;
@@ -179,6 +187,8 @@ namespace BioStarServer
                 MessageBox.Show("请选择要操作的设备", "提示");
                 return;
             };
+
+            this.textBox1.Text = "";
 
             foreach (var VARIABLE in selectedListViewItemCollection)
             {
@@ -201,6 +211,25 @@ namespace BioStarServer
         private void Main_VisibleChanged(object sender, EventArgs e)
         {
             this.Visible = true;
+        }
+
+        private void 读取设备用户数量ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var selectedListViewItemCollection = listView1.SelectedItems;
+            if (selectedListViewItemCollection.Count == 0)
+            {
+                MessageBox.Show("请选择要操作的设备", "提示");
+                return;
+            };
+
+            this.textBox1.Text = "";
+
+            foreach (var VARIABLE in selectedListViewItemCollection)
+            {
+                ListViewItem item = (ListViewItem)VARIABLE;
+                DeviceMonitor deviceMonitor = (DeviceMonitor)item.Tag;
+                deviceMonitor.GetUserSize();
+            }
         }
     }
 }

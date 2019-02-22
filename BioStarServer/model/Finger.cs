@@ -10,5 +10,6 @@ namespace BioStarServer.model
         public int Id { get; set; }
         public byte[] Data { get; set; }
         public int Index { get; set; }
+        public int Size { get; set; }
     }
 }

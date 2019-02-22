@@ -22,6 +22,7 @@ namespace BioStarServer
 
         private bool Clean_Log;
         private bool Clean_User;
+        private bool Get_User_Size;
 
         public DeviceMonitor(BioSDK bioSdk, Device device)
         {
@@ -71,6 +72,7 @@ namespace BioStarServer
                 {
                     bioSdk.CleanLog(ref DeviceId);
                     Clean_Log = false;
+                    return;
                 }
 
 
@@ -78,6 +80,14 @@ namespace BioStarServer
                 {
                     bioSdk.RemoveAllUser(ref DeviceId);
                     Clean_User = false;
+                    return;
+                }
+
+                if (Get_User_Size)
+                {
+                    bioSdk.GetUserSize(ref DeviceId);
+                    Get_User_Size = false;
+                    return;
                 }
 
                 bioSdk.SynDateTime(ref DeviceId,DatabaseHelper.ParseDateTimeTo1970Sec(DateTime.Now.AddHours(8)));
@@ -90,7 +100,7 @@ namespace BioStarServer
                         var cardIds = new List<string>();
                         cardIds.Add(geTask.CardID);
                         var fingers = DatabaseHelper.GetFingers(geTask.CardSN);
-                        bool insert = bioSdk.InsertUser(ref DeviceId, geTask.CardSN,geTask.CardType, geTask.UserName, cardIds, fingers.TakeWhile(t=> t.Data !=null && t.Data.Length==768).Select(s=>s.Data).ToList());
+                        bool insert = bioSdk.InsertUser(ref DeviceId, geTask.CardSN,geTask.CardType, geTask.UserName, cardIds, fingers.Select(s=>s.Data).ToList());
                         if (insert)
                         {
                             DatabaseHelper.UpdateTask(geTask.Id, 1, 2);
@@ -99,6 +109,11 @@ namespace BioStarServer
 
                     if (geTask.RecordType == 3)
                     {
+                        if(geTask.CardSN == null)
+                        {
+                            DatabaseHelper.DeleteTask(geTask.Id);
+                            continue;
+                        }
                         bool remove = bioSdk.RemoveUser(ref DeviceId, geTask.CardSN);
                         if (remove)
                         {
@@ -126,7 +141,7 @@ namespace BioStarServer
             catch (Exception e)
             {
                 device.Enable = 2;
-                _log.ErrorFormat("设备 {0} 通讯时发生异常", device);
+                _log.ErrorFormat("设备 {0} 通讯时发生异常", device.Ip);
             }
             finally
             {
@@ -162,6 +177,11 @@ namespace BioStarServer
         internal void CleanUser()
         {
             Clean_User = true;
+        }
+
+        internal void GetUserSize()
+        {
+            Get_User_Size = true;
         }
     }
 }
